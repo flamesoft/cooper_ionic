@@ -48,8 +48,8 @@ angular.module('starter.controllers', [])
       gender: $scope.data.gender,
       age: $scope.data.age
     });
-    person.assessCooper($scope.data.distance);
     $scope.person = person;
+    person.calculateVmax(person, $scope.data.distance);
     console.log($scope.person);
   };
 })
