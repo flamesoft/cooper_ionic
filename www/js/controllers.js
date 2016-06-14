@@ -81,13 +81,14 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PerformanceCtrl', function($scope, performaceData, $ionicLoading, $ionicPopup){
+.controller('PerformanceCtrl', function($scope, performanceData, $ionicLoading, $ionicPopup){
   $scope.saveData = function(person){
-    var data = {performace_data: {data: {message: person.message}}}
+    var data_perf = {performance_data: {data: {message: person.message}}};
+    console.log(data_perf);
     $ionicLoading.show({
      template: 'Saving...'
     });
-    performaceData.save(data, function(response){
+    performanceData.save(data_perf, function(response){
         console.log(response);
         $ionicLoading.hide();
         $scope.showAlert('Sucess', response.message);
