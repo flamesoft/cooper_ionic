@@ -1,5 +1,6 @@
 angular.module('starter.controllers', [])
 
+
 .controller('AppCtrl', function($rootScope,
                                  $scope,
                                  $ionicModal,
@@ -50,10 +51,10 @@ angular.module('starter.controllers', [])
        $scope.errorMessage = error;
      });
  };
+ $rootScope.$on('auth:login-success', function(ev, user) {
+   $scope.currentUser = angular.extend(user, $auth.retrieveData('auth_headers'));
+ });
 
-  $rootScope.$on('auth:login-success', function(ev, user) {
-    $scope.currentUser = user;
-  });
 })
 
 .controller('TestController', function($scope) {
@@ -80,12 +81,19 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PerformanceCtrl', function($scope, performaceData){
+.controller('PerformanceCtrl', function($scope, performaceData, $ionicLoading, $ionicPopup){
   $scope.saveData = function(person){
-    data = {performace_data: {data: {message: person.message}}}
+    var data = {performace_data: {data: {message: person.message}}}
+    $ionicLoading.show({
+     template: 'Saving...'
+    });
     performaceData.save(data, function(response){
         console.log(response);
+        $ionicLoading.hide();
+        $scope.showAlert('Sucess', response.message);
       }, function(error){
+        $ionicLoading.hide();
+        $scope.showAlert('Failure', error.statusText);
         console.log(error);
       })
   };
@@ -93,4 +101,14 @@ angular.module('starter.controllers', [])
   $scope.retrieveData = function(){
 
   };
+
+  $scope.showAlert = function(message, content) {
+     var alertPopup = $ionicPopup.alert({
+       title: message,
+       template: content
+     });
+     alertPopup.then(function(res) {
+     // Place some action here if needed...
+     });
+   };
 })
