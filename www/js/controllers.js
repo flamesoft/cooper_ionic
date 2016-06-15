@@ -103,7 +103,7 @@ angular.module('starter.controllers', [])
     $ionicLoading.show({
        template: 'Retrieving data...'
      });
-     performanceData.query({method:'GET',isArray:true}, function(response){
+     performanceData.query({}, function(response){
        $state.go('app.data', {savedDataCollection: response.entries});
        $ionicLoading.hide();
      }, function(error){
