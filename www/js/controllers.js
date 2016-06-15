@@ -81,7 +81,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PerformanceCtrl', function($scope, performanceData, $ionicLoading, $ionicPopup){
+.controller('PerformanceCtrl', function($scope, performanceData, $ionicLoading, $ionicPopup, $state){
   $scope.saveData = function(person){
     var data_perf = {performance_data: {data: {message: person.message}}};
     console.log(data_perf);
@@ -103,7 +103,7 @@ angular.module('starter.controllers', [])
     $ionicLoading.show({
        template: 'Retrieving data...'
      });
-     performanceData.query({}, function(response){
+     performanceData.query({method:'GET',isArray:true}, function(response){
        $state.go('app.data', {savedDataCollection: response.entries});
        $ionicLoading.hide();
      }, function(error){
